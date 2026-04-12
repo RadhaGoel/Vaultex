@@ -8,4 +8,10 @@ router.get('/', backupController.getAllBackups);
 // Create immediate backup
 router.post('/create', backupController.createBackup);
 
+// Schedule backup
+router.post('/schedule', backupController.scheduleBackup);
+
+// Delete backup
+router.delete('/:id', backupController.deleteBackup);
+
 module.exports = router;
