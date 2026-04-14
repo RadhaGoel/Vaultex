@@ -97,7 +97,7 @@ npm install
 PORT=3000
 MONGO_URI=mongodb://localhost:27017/backupdb
 BACKUP_DIR=./backups
-ENCRYPTION_KEY=mysecretkey123
+ENCRYPTION_KEY=your_secret_key_here
 
 # 5. Start the server
 npm start
