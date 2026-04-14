@@ -36,6 +36,8 @@ A full-stack backup management system inspired by enterprise tools like **Veeam*
 ---
 
 ## 📁 Project Structure
+
+```bash
 Vaultex/
 ├── backend/
 │   ├── backups/                        # Generated ZIP backup files (auto-created)
@@ -44,33 +46,31 @@ Vaultex/
 │       │   └── db.js                   # MongoDB connection setup
 │       ├── controllers/
 │       │   ├── backupController.js     # Backup create, schedule, delete logic
-│       │   └── recoveryController.js  # Point-in-time recovery logic
+│       │   └── recoveryController.js   # Point-in-time recovery logic
 │       ├── models/
-│       │   ├── Backup.js              # Backup mongoose schema
-│       │   └── Recovery.js            # Recovery audit log schema
+│       │   ├── Backup.js               # Backup mongoose schema
+│       │   └── Recovery.js             # Recovery audit log schema
 │       ├── routes/
-│       │   ├── backupRoutes.js        # Backup API routes
-│       │   ├── recoveryRoutes.js      # Recovery API routes
-│       │   └── statsRoutes.js         # Dashboard stats routes
+│       │   ├── backupRoutes.js
+│       │   ├── recoveryRoutes.js
+│       │   └── statsRoutes.js
 │       ├── services/
-│       │   ├── binarySearch.js        # Binary search algorithm
-│       │   └── checksum.js            # MD5 checksum generator
+│       │   ├── binarySearch.js
+│       │   └── checksum.js
 │       ├── workers/
-│       │   └── backupWorker.js        # Child process backup worker
-│       └── server.js                  # Express server entry point
+│       │   └── backupWorker.js
+│       └── server.js
 ├── public/
 │   ├── css/
-│   │   └── style.css                  # Dashboard dark theme styles
-│   ├── index.html                     # Admin dashboard UI
-│   └── app.js                         # Frontend JavaScript
+│   │   └── style.css
+│   ├── index.html
+│   └── app.js
 ├── scripts/
-│   └── backup.sh                      # Shell script: compress + set permissions
-├── .env                               # Environment variables
+│   └── backup.sh
+├── .env
 ├── .gitignore
 ├── package.json
 └── README.md
-
----
 
 ## ⚙️ Setup & Installation
 
@@ -113,7 +113,7 @@ Open your browser and go to: **http://localhost:3000**
 PORT=3000
 MONGO_URI=mongodb://localhost:27017/backupdb
 BACKUP_DIR=./backups
-ENCRYPTION_KEY=mysecretkey123
+ENCRYPTION_KEY=your_secret_key_here
 ```
 
 ---
