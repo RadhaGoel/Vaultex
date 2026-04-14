@@ -4,7 +4,6 @@ const path = require('path');
 const fs = require('fs');
 const generateChecksum = require('../services/checksum');
 
-// Get all backups
 exports.getAllBackups = async (req, res) => {
   try {
     const backups = await Backup.find().sort({ scheduledAt: -1 });
@@ -13,13 +12,10 @@ exports.getAllBackups = async (req, res) => {
     res.status(500).json({ message: 'Error fetching backups' });
   }
 };
-
-// Create backup — child process se
+ 
 exports.createBackup = async (req, res) => {
   try {
     const { filename, destination } = req.body;
-
-    // Check karo destination exist karta hai ya nahi
     if (!fs.existsSync(destination)) {
       const backup = new Backup({
         filename,
@@ -84,7 +80,6 @@ exports.createBackup = async (req, res) => {
   }
 };
 
-// Schedule backup
 exports.scheduleBackup = async (req, res) => {
   try {
     const { filename, destination, scheduledAt } = req.body;
@@ -101,7 +96,7 @@ exports.scheduleBackup = async (req, res) => {
   }
 };
 
-// Delete backup
+
 exports.deleteBackup = async (req, res) => {
   try {
     await Backup.findByIdAndDelete(req.params.id);

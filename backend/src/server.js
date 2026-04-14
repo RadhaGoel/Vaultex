@@ -15,25 +15,20 @@ const statsRoutes = require('./routes/statsRoutes');
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../../public')));
 
-// Connect to DB
 connectDB();
 
-// Routes
 app.use('/api/backups', backupRoutes);
 app.use('/api/recovery', recoveryRoutes);
 app.use('/api/stats', statsRoutes);
 
-// Dashboard
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../public/index.html'));
 });
 
-// Cron job - har minute pending backups check karo
 cron.schedule('* * * * *', async () => {
   try {
     const now = new Date();
@@ -98,7 +93,6 @@ cron.schedule('* * * * *', async () => {
   }
 });
 
-// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

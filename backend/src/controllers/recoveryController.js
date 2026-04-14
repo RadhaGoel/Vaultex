@@ -2,11 +2,13 @@ const Backup = require('../models/Backup');
 const Recovery = require('../models/Recovery');
 const binarySearch = require('../services/binarySearch');
 
-// Point-in-time recovery using binary search
 exports.pointInTimeRecovery = async (req, res) => {
   try {
     const { timestamp } = req.body;
     const targetTime = new Date(timestamp);
+    if (Number.isNaN(targetTime.getTime())) {
+      return res.status(400).json({ message: 'Invalid timestamp' });
+    }
 
     const backups = await Backup.find({ status: 'completed' }).sort({ completedAt: 1 });
 
@@ -14,10 +16,12 @@ exports.pointInTimeRecovery = async (req, res) => {
       return res.status(404).json({ message: 'No completed backups found' });
     }
 
-    // Binary search service use karo
-    const result = binarySearch(backups, targetTime);
+    let result = binarySearch(backups, targetTime);
+    const firstCompletedAt = new Date(backups[0].completedAt);
+    if (!result && targetTime < firstCompletedAt) {
+      result = backups[0];
+    }
 
-    // Recovery log save karo
     await Recovery.create({
       backupId: result ? result._id : backups[0]._id,
       targetTimestamp: targetTime,
@@ -35,7 +39,7 @@ exports.pointInTimeRecovery = async (req, res) => {
   }
 };
 
-// Get all recovery logs
+
 exports.getRecoveryLogs = async (req, res) => {
   try {
     const logs = await Recovery.find().populate('backupId').sort({ requestedAt: -1 });

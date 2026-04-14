@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Backup = require('../models/Backup');
 
-// Get dashboard stats
 router.get('/', async (req, res) => {
   try {
     const total = await Backup.countDocuments();
